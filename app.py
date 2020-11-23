@@ -3,6 +3,8 @@ import logic
 
 app = Flask(__name__)
 
+Logic = logic.Crypto()
+
 @app.route('/')
 def display():
     return render_template("home.html", reply="Welcome!!!")
@@ -23,8 +25,8 @@ def decryptDisplay():
 def encryptMessage():
     if request.method == 'POST':
         message = request.form['message']
-        cipherText = logic.Encryptor(message)
-        cipherText = logic.convertToString(cipherText)
+        cipherText = Logic.Encryptor(message)
+        cipherText = Logic.convertToString(cipherText)
         return render_template("home.html", reply="Success", flag=True, text = cipherText)
     else:
         return redirect('/error')
@@ -33,8 +35,8 @@ def encryptMessage():
 def decryptMessage():
     if request.method == 'POST':
         cipherText = request.form['cipherText']
-        cipherText = logic.ConvertToList(cipherText)
-        message = logic.Decryptor(cipherText)
+        cipherText = Logic.ConvertToList(cipherText)
+        message = Logic.Decryptor(cipherText)
         return render_template("home.html", reply="Success", flag=False, text = message)
     else:
         return redirect('/error')
